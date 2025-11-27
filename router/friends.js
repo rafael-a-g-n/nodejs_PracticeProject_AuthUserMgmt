@@ -34,7 +34,6 @@ router.get("/:email", (req, res) => {
 // POST request: Add a new friend
 router.post("/", (req, res) => {
   if (req.body.email) {
-    // Create or update friend's details based on provided email
     friends[req.body.email] = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -47,11 +46,9 @@ router.post("/", (req, res) => {
 
 // PUT request: Update the details of a friend with email id
 router.put("/:email", (req, res) => {
-  // Extract email parameter from request URL
   const email = req.params.email;
-  let friend = friends[email]; // Retrieve friend object associated with email
+  let friend = friends[email];
   if (friend) {
-    // Check if friend exists
     let DOB = req.body.DOB;
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
@@ -74,8 +71,12 @@ router.put("/:email", (req, res) => {
 
 // DELETE request: Delete a friend by email id
 router.delete("/:email", (req, res) => {
-  // Update the code here
-  res.send("Yet to be implemented"); //This line is to be replaced with actual return value
+  const email = req.params.email;
+  if (email) {
+    delete friends[email];
+  }
+
+  res.send(`Friend with the email ${email} deleted.`);
 });
 
 module.exports = router;
